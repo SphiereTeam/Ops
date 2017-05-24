@@ -29,11 +29,40 @@
 					$user_password = mysqli_real_escape_string( $connection, $_POST["user_password"] );
 
 					//add '-' to ic
+					//assumes ic given is 8 numbers with no special characters
 					$user_ic_array = array();
 					$user_ic_array[0] = substr($user_ic, 0, 2);
 					$user_ic_array[1] = substr($user_ic, 2,7);
 					$user_ic = $user_ic_array[0] . "-" . $user_ic_array[1];
 					//echo $user_ic;
+
+					//Check if user already exists by selecting the user ic
+					$query  = "SELECT * ";
+					$query .= "FROM ops_user ";
+					$query .= "WHERE user_ic = '{$user_ic}' ";
+
+					$check = mysqli_query($connection, $query);
+
+					if(mysqli_num_rows($check) != 0){
+						die("User already exists!");
+					}else{
+
+						//Perform database insert
+						$query  = "INSERT INTO ops_user (";
+						$query .= " user_fullname, user_email, user_ic, user_type, user_salary, user_username, user_password ";
+						$query .= ") VALUES (";
+						$query .= " '{$user_fullname}', '{$user_email}', '{$user_ic}', $user_type, $user_salary, '{$user_username}', '{$user_password}' ";
+						$query .= ")";
+						
+						$result = mysqli_query($connection, $query);
+						if($result){
+							echo "User created!";
+						} else{
+							die("Failed to create user!");
+						}
+					}
+
+					mysqli_close($connection);
 				?>
 			<?php endif; ?>
 

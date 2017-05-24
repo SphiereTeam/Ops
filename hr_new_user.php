@@ -14,7 +14,27 @@
 		<div class="box">
 
 			<?php if( !empty( $_POST["submit"] ) ) : ?>
-				<?php echo '<pre>' . var_export($_POST, true) . '</pre>'; ?>
+				<?php 
+					echo '<pre>' . var_export($_POST, true) . '</pre>';
+
+					//prevents MySQL injections
+					$user_fullname = mysqli_real_escape_string( $connection, $_POST["user_fullname"] );
+					$user_email = mysqli_real_escape_string( $connection, $_POST["user_email"] );
+					$user_ic = mysqli_real_escape_string( $connection, $_POST["user_ic"] );
+
+					$user_type = mysqli_real_escape_string( $connection, $_POST["user_type"] );
+					$user_salary = mysqli_real_escape_string( $connection, $_POST["user_salary"] );
+					
+					$user_username = mysqli_real_escape_string( $connection, $_POST["user_username"] );
+					$user_password = mysqli_real_escape_string( $connection, $_POST["user_password"] );
+
+					//add '-' to ic
+					$user_ic_array = array();
+					$user_ic_array[0] = substr($user_ic, 0, 2);
+					$user_ic_array[1] = substr($user_ic, 2,7);
+					$user_ic = $user_ic_array[0] . "-" . $user_ic_array[1];
+					//echo $user_ic;
+				?>
 			<?php endif; ?>
 
 			<form id="new_sheet" name="new_sheet" method="POST">
@@ -86,7 +106,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="user_password">Password</label>
-							<input id="user_password" name="user_password" type="text" class="form-control" placeholder="Enter password" required>
+							<input id="user_password" name="user_password" type="password" class="form-control" placeholder="Enter password" required>
 						</div>
 					</div><!-- /.col-md-6 -->
 				</div><!-- /.box-body -->

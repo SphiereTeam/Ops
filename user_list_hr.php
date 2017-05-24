@@ -23,38 +23,38 @@
 						<table id="example1" class="table table-bordered table-striped">
 							<thead>
 								<tr>
-									<th>User ID</th>
 									<th>Full Name</th>
 									<th>Username</th>
-									<th>User Type</th>
+									<th>User type</th>
 									<th>Email</th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<?php
-									$query = "SELECT * FROM users";
-									$result = $connection->query($query);
+									$query = "SELECT * FROM ops_user";
+									//$result = $connection->query($query);
 								?>
 								<?php if ($result = mysqli_query($connection, $query)) : ?>
 									
 									<!-- fetch results -->
 									<?php while ($row = mysqli_fetch_assoc($result)) : ?>
 										<tr>
-											<td><?php echo $row['EmpNo'];?></td>
 											<td>
-												<span><img src="dist/img/users/<?php echo $row['EmpNo'];?>.jpg" class="img-circle img-sm 1x" alt="User Image"></span><?php echo ucwords(strtolower($row['FullName']));?>
+												<span><img src="dist/img/users/1.jpg" class="img-circle img-sm 1x" alt="User Image"></span><?php echo ucwords(strtolower($row['user_fullname']));?>
 											</td>
-											<td><?php echo ucwords(strtolower($row['UserName']));?></td>
+											<td><?php echo $row['user_username']; ?></td>
 											<td>
-												<span class="label label-success">Permanent</span>
-												<?php if($row['level'] == "9"): ?>
+												<?php if( $row['user_type'] == 0 ): ?>
+													<span class="label bg-blue">Temporary</span>
+												<?php elseif( $row['user_type'] == 1 ): ?>
+													<span class="label label-success">Permanent</span>
+												<?php elseif( $row['user_type'] == 2 ): ?>
+													<span class="label label-success">Permanent</span>
 													<span class="label bg-red">Admin</span>
-												<?php else: ?>
-													<span class="label bg-blue">Normal Users</span>
 												<?php endif; ?>
 											</td>
-											<td><?php echo $row['Email']; ?></td>
+											<td><?php echo $row['user_email']; ?></td>
 										</tr>
 									<?php endwhile; ?>
 									

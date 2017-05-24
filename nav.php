@@ -83,7 +83,7 @@ include("top_nav.php");
 							
 							?>
                             <li class="treeview">
-                                <a href="approval_page.php">
+                                <a href="approve_application.php">
                                     <i class="fa fa-asterisk"></i> <span>Pending My Approval</span>
 									<span class="label label-danger pull-right"></span>
                                 </a>
@@ -249,7 +249,7 @@ include("top_nav.php");
 								</span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="new_sheet.php"><i class="fa fa-circle-o"></i> Apply Leave</a></li>
+                                    <li><a href="leave_application.php"><i class="fa fa-circle-o"></i> Apply Leave</a></li>
                                     <li><a href="sheet_submit.php"><i class="fa fa-circle-o"></i> My Leave History</a></li>
                                     
                                 </ul>

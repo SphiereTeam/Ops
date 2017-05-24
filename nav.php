@@ -2,7 +2,8 @@
 <?php
 require("head.php");
 require("function/custom_hour_calc.php");
- include("database_connection.php");
+// include("database_connection.php");
+require_once("db/db_connect.php");
 
 	?>
     <html>

@@ -1,10 +1,5 @@
 <?php
 include("nav.php");
-include("database_connection.php");
-
-$month = $_REQUEST['month'];
-mysql_query("INSERT INTO `attendance` (`attendance_id`, `EmpNo`, `Year`, `Month`, `Punch_card_upload`, `created`, `status`) 
-					VALUES ('', '$user_id', '$year', '$month', '', '$date', '$user_id')") or die("error");
 ?>
 
 <div class="content-wrapper">

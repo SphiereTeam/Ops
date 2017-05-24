@@ -36,27 +36,36 @@
 									$query = "SELECT * FROM users";
 									$result = $connection->query($query);
 								?>
+								<?php if ($result = mysqli_query($connection, $query)) : ?>
+									
+									<!-- fetch results -->
+									<?php while ($row = mysqli_fetch_assoc($result)) : ?>
+										<tr>
+											<td><?php echo $row['EmpNo'];?></td>
+											<td>
+												<span><img src="dist/img/users/<?php echo $row['EmpNo'];?>.jpg" class="img-circle img-sm 1x" alt="User Image"></span><?php echo ucwords(strtolower($row['FullName']));?>
+											</td>
+											<td><?php echo ucwords(strtolower($row['UserName']));?></td>
+											<td>
+												<span class="label label-success">Permanent</span>
+												<?php if($row['level'] == "9"): ?>
+													<span class="label bg-red">Admin</span>
+												<?php else: ?>
+													<span class="label bg-blue">Normal Users</span>
+												<?php endif; ?>
+											</td>
+											<td><?php echo $row['Email']; ?></td>
+										</tr>
+									<?php endwhile; ?>
+									
+									<!-- free result set -->
+									<?php mysqli_free_result($result); ?>
 
-								<?php while( $row = $result->fetch_assoc() ) : ?>
+								<?php endif; ?>
+								
+								<!-- close connection -->
+								<?php mysqli_close($connection); ?>
 
-									<tr>
-										<td><?php echo $row['EmpNo'];?></td>
-										<td>
-											<span><img src="dist/img/users/<?php echo $row['EmpNo'];?>.jpg" class="img-circle img-sm 1x" alt="User Image"></span><?php echo ucwords(strtolower($row['FullName']));?>
-										</td>
-										<td><?php echo ucwords(strtolower($row['UserName']));?></td>
-										<td>
-											<span class="label label-success">Permanent</span>
-											<?php if($row['level'] == "9"): ?>
-												<span class="label bg-red">Admin</span>
-											<?php else: ?>
-												<span class="label bg-blue">Normal Users</span>
-											<?php endif; ?>
-										</td>
-										<td><?php echo $row['Email']; ?></td>
-									</tr>
-
-								<?php endwhile; ?>
 							</tbody>
 						</table>
 					</div><!-- /.box-body -->

@@ -15,7 +15,7 @@
 
 			<?php if( !empty( $_POST["submit"] ) ) : ?>
 				<?php 
-					echo '<pre>' . var_export($_POST, true) . '</pre>';
+					// echo '<pre>' . var_export($_POST, true) . '</pre>';
 
 					//prevents MySQL injections
 					$user_fullname = mysqli_real_escape_string( $connection, $_POST["user_fullname"] );

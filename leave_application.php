@@ -1,6 +1,7 @@
 <?php
+
+
 include("nav.php");
-include ("database_connection.php");
 if(isset($_REQUEST['cmd']) && $_REQUEST['cmd'] == "submit_leave")
 {
 	$start = $_REQUEST['start_date'];

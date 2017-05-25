@@ -43,7 +43,6 @@ function decline(appid){
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>User</th>
                                             <th>Duration</th>
 											<th>Date</th>
@@ -57,14 +56,14 @@ function decline(appid){
 								
 										
 									
-										$query = mysql_query("select * from leave_application where status ='pending'");
+										$query = mysql_query("SELECT * FROM leave_application INNER JOIN ops_user on leave_application.user_id = ops_user.user_id WHERE status ='pending'");
 										while($row = mysql_fetch_array($query))
 										{
 											?>
 											<tr>
 											<td><?php echo "#".$row['leave_app_id'];?></td>
-											<?php $s = mysql_query("select * from user where user_id = ".$row['user_id']);
-											$name = mysql_result($s,0,'user_username');
+											<?php $s = mysql_query("select * from ops_user where user_id = ".$row['user_id']);
+											$name = mysql_result($s,0,'user_id');
 											?>
 											
 											<td><?php echo $name;?></td>

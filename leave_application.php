@@ -15,10 +15,43 @@ if(isset($_REQUEST['cmd']) && $_REQUEST['cmd'] == "submit_leave")
 	 $datediff = $end_end - $start_date;
 	 $day = floor($datediff/(60*60*24));
 	$day +=1;
+
+	$user_ic = "09-876543";
+	$query  = "SELECT user_id ";
+	$query .= "FROM ops_user ";
+	$query .= "WHERE user_ic = '{$user_ic}' ";
+
+	if ($result = mysqli_query($connection, $query)){
+		//echo "Test";
+		$row = mysqli_fetch_assoc($result);
+		//echo $row["user_id"];
+
+		$user_id = $row["user_id"];
+
+		$current_date = date("Y-m-d");
+		$status = "Pending";
+
+		//Perform database insert
+		$query  = "INSERT INTO leave_application (";
+		$query .= " user_id, start_date, end_date, no_of_day, leave_reason, date_applied, status ";
+		$query .= ") VALUES (";
+		$query .= " '{$user_id}', '{$start}', '{$end}', $day, '{$reason}', '{$current_date}', '{$status}' ";
+		$query .= ")";
+		
+		$result = mysqli_query($connection, $query);
+		if($result){
+			echo "Leave application submitted!";
+		} else{
+			die("Failed to submit leave application!");
+		}
+
+	}else{
+		echo "Error retrieving data!";
+	}
 	
-	mysql_query("INSERT INTO `test`.`leave_application` (`leave_app_id`, `user_id`, `start_date`, `end_date`, `no_of_day`, `leave_reason`, `date_applied`, `status`)
-	VALUES ('', '$userid', '$start', '$end', '$day', '$reason', '".date("Y-m-d")."', 'pending');") or die("Error");
-	$status = "success";
+	// mysql_query("INSERT INTO `test`.`leave_application` (`leave_app_id`, `user_id`, `start_date`, `end_date`, `no_of_day`, `leave_reason`, `date_applied`, `status`)
+	// VALUES ('', '$userid', '$start', '$end', '$day', '$reason', '".date("Y-m-d")."', 'pending');") or die("Error");
+	// $status = "success";
 
 }
 if(isset($_REQUEST['cmd']) && $_REQUEST['cmd'] == "refresh")
@@ -96,6 +129,9 @@ function refresh()
 </script>
 <div class="content-wrapper">
 	<div class = "col-md-8">
+
+	<?php var_dump($_POST); ?>
+
 	<?php
 	if(isset($status) && $status == "success")
 	{
